@@ -1,6 +1,7 @@
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth from "next-auth/next";
-import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from 'next-auth/providers/google';
+
 import getDb from '../../../lib/db/database';
 
 const THREE_DAYS: number = 60 * 60 * 24 * 3;
@@ -19,15 +20,11 @@ export default NextAuth({
 		secret,
 	},
 	providers: [
-		Credentials({
-			name: "Credentials",
-			credentials: {
-				username: { label: "Username", type: "text", placeholder: "jsmith" },
-				password: { label: "Password", type: "password" },
-			},
-            async authorize(credentials){
-                return null;
-            }
-		})
-	]
+		GoogleProvider({
+			clientId: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			authorizationUrl:
+				"https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
+		}),
+	],
 });

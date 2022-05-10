@@ -1,2 +1,1 @@
-import type { Adapter } from "next-auth/adapters";
-
+import mongoose from "mongoose";
