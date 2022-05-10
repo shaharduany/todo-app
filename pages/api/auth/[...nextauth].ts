@@ -1,15 +1,14 @@
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth from "next-auth/next";
 import GoogleProvider from 'next-auth/providers/google';
-
-import getDb from '../../../lib/db/database';
+import clientPromise from "../../../lib/db/database";
 
 const THREE_DAYS: number = 60 * 60 * 24 * 3;
 const ONE_DAY: number = THREE_DAYS / 3;
 const secret: string =  "Thatsbullshititgothere";
 
 export default NextAuth({
-	adapter: MongoDBAdapter(getDb()),
+	adapter: MongoDBAdapter(clientPromise),
 	session: {
 		strategy: "jwt",
 		maxAge: THREE_DAYS,
