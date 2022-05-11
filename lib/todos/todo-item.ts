@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { TokenEndpointHandler } from "next-auth/providers";
-import getDb from "../db/database";
+import clientPromise from "../db/database";
 import Todo from "../db/models/Todo";
 
 type TodoDate = Date | number;
@@ -28,16 +28,23 @@ export default class TodoItem {
     }
 
     async addToDatabase(){
-        await getDb();
-        
+        try {
+            await clientPromise;
+        } catch(error){
+            throw error;
+        }
+
         const todo = new Todo({
             name: this.name,
             status: this.status,
             date: this.date
         });
-
-        await todo.save();
-
+        try {
+            await todo.save();
+        } catch (error){
+            throw error;
+        }
+        
         this.id = todo._id;
         return this.id;
     }
@@ -50,6 +57,10 @@ export default class TodoItem {
         this.status = status;
         try {
             await Todo.findOneAndUpdate({ name: this.name }, { status: this.status });
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
         }
     }
 }

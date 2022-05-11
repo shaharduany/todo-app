@@ -1,19 +1,33 @@
-import Adapters from "next-auth/adapters";
+import mongoose, { Schema } from "mongoose";
 
-// Extend the built-in models using class inheritance
-export default class User extends Adapters.TypeORM.Models.User.model {
-	// You can extend the options in a model but you should not remove the base
-	// properties or change the order of the built-in options on the constructor
-	constructor(name, email, image, emailVerified) {
-		super(name, email, image, emailVerified);
-	}
-}
+let userSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: false,
+    },
+    image: {
+        type: String,
+        required: false,
+    },
+    emailVerified: {
+        
+    },
+    email: {
+        required: true,
+        type: String,
+        unique: true,
+    },
+    todos: {
+        type: Array,
+        required: false,
+        default: [],
+    }, 
+    history: {
+        type: Array,
+        required: false,
+        default: [],
+    },
+});
 
-export const UserSchema = {
-	name: "User",
-	target: User,
-	columns: {
-		...Adapters.TypeORM.Models.User.schema.columns,
-		// Add your own properties to the User schema
-	},
-};
+export default mongoose.models?.User || mongoose.model("user", userSchema);

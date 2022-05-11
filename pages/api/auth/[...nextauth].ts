@@ -26,4 +26,7 @@ export default NextAuth({
 				"https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
 		}),
 	],
+	pages: {
+		newUser: "/welcome/",
+	}
 });
