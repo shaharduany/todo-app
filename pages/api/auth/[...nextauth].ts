@@ -5,7 +5,7 @@ import clientPromise from "../../../lib/db/database";
 
 const THREE_DAYS: number = 60 * 60 * 24 * 3;
 const ONE_DAY: number = THREE_DAYS / 3;
-const secret: string =  "Thatsbullshititgothere";
+const secret: string =  process.env.SECRET || "ASDFASDFASDFASDFAEWqwerqwe";
 
 export default NextAuth({
 	adapter: MongoDBAdapter(clientPromise),
