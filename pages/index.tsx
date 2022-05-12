@@ -2,15 +2,17 @@ import type { NextPage } from "next";
 import { getSession, signOut } from "next-auth/react";
 import JoinPage from "../components/JoinComp";
 
-const Home: NextPage = (props) => {
+interface HomeProps {
+	session: string;
+}
+
+const Home: NextPage = (props: HomeProps) => {
 	let session = JSON.parse(props.session);
 
-	function logoutClickHandler(event) {
+	function logoutClickHandler(event: EventListener) {
 		signOut();
 	}
-
-  console.log(session);
-
+	
 	if (session) {
 		return (
 			<div>
@@ -18,15 +20,18 @@ const Home: NextPage = (props) => {
 				<button onClick={logoutClickHandler}>LOGOUT</button>
 			</div>
 		);
+
 	} else {
-		return <>
-      <JoinPage />    
-    </>;
+		return (
+			<>
+				<JoinPage />
+			</>
+		);
 	}
 };
 
 export async function getServerSideProps(context) {
-	const session = JSON.stringify( await getSession(context));
+	const session = JSON.stringify(await getSession(context));
 	return {
 		props: {
 			session,

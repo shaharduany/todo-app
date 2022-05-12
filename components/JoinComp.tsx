@@ -1,6 +1,6 @@
 import { signIn } from "next-auth/react";
 
-function JoinPage(props){
+function JoinPage(){
     
     return (<div>
         <div>
