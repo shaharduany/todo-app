@@ -1,3 +1,3 @@
-export default function AccountPage(props){
+export default function AccountPage(props: {}){
     return (<div></div>)
 }

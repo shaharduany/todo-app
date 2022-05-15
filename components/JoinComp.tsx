@@ -8,7 +8,7 @@ function JoinPage(){
             <h5>You need to register in order to join us</h5>
         </div>
         <div>
-            <button onClick={() => signIn()}>Join us using Google</button>
+            <button onClick={() => signIn("google")}>Join us using Google</button>
         </div>
     </div>)
 }
