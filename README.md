@@ -1,10 +1,11 @@
 # Todo App
 
-Under construction
+## Under construction
 
-
-I develop it to get a better understanding of TypeScript
+This is a todo web application with passwordless authentication using OAuth with Google, developed with NextJS, TypeScript, MongoDB.
 
 ## Libraries and Frameworks: 
 1. NEXT.js
 2. TypeScript
+3. NextAuth
+4. MongoDB
