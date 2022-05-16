@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
+import { TodoDate, TodoStatus } from "../../todos/todo-item";
 
-let todoSchema = new mongoose.Schema({
+export interface TodoSchemaInterface {
+    name: String,
+    date: TodoDate,
+    status: TodoStatus,
+}
+
+let todoSchema = new mongoose.Schema<TodoSchemaInterface>({
     name: {
         type: String,
         unique: false,
@@ -10,7 +17,7 @@ let todoSchema = new mongoose.Schema({
         TYPR: Date,
         required: false,
         unique: false,
-        default; Date.now(),
+        default: Date.now(),
     },
     status: {
         type: Number,

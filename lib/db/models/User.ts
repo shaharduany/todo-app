@@ -1,6 +1,14 @@
 import mongoose, { Schema } from "mongoose";
 
-let userSchema = new Schema({
+export interface UserInterface {
+    name: string,
+    image: string,
+    email: string,
+    todos: [],
+    history: [],
+}
+
+let userSchema = new Schema<UserInterface>({
     name: {
         type: String,
         required: true,
@@ -9,9 +17,6 @@ let userSchema = new Schema({
     image: {
         type: String,
         required: false,
-    },
-    emailVerified: {
-        
     },
     email: {
         required: true,

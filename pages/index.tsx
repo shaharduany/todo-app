@@ -1,38 +1,32 @@
-import type { NextPage } from "next";
-import { getSession, signOut } from "next-auth/react";
+import type { NextPage, NextPageContext } from "next";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import AccountPage from "../components/AccountPage";
-import JoinPage from "../components/JoinComp";
 
 interface HomeProps {
-	session: string;
+	session: string,
 }
 
 const Home: NextPage = (props: HomeProps) => {
 	let session = JSON.parse(props.session);
 
-	console.log(session);
-
-	function logoutClickHandler(event: EventListener) {
-		signOut();
-	}
+	let router = useRouter();
+	useEffect(() => {
+		if(!session){
+			router.push("/join-us");
+		}
+	}, [session]);
 	
-	if (session) {
-		return (
-			<div>
-				<AccountPage />
-			</div>
-		);
-	} else {
-		return (
-			<>
-				<JoinPage />
-			</>
-		);
-	}
+	return (<div>
+		<AccountPage />
+
+	</div>)
 };
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context: NextPageContext) {
 	const session = JSON.stringify(await getSession(context));
+
 	return {
 		props: {
 			session,

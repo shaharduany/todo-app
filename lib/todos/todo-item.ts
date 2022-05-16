@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
-import { TokenEndpointHandler } from "next-auth/providers";
-import clientPromise from "../db/database";
-import Todo from "../db/models/Todo";
+import Todo, { TodoSchemaInterface } from "../db/models/Todo";
 
-type TodoDate = Date | number;
+export type TodoDate = Date | number;
 type TodoId = string | mongoose.Types.ObjectId;
 
 export enum TodoStatus {
@@ -18,7 +16,8 @@ export default class TodoItem {
     status: TodoStatus;
     id: TodoId;
 
-    constructor(name: string, status: TodoStatus = TodoStatus.Pending, 
+    constructor(name: string,
+         status: TodoStatus = TodoStatus.Pending,          
         date: TodoDate = Date.now()
         id: TodoId = "empty"){
         this.name = name;
@@ -27,26 +26,12 @@ export default class TodoItem {
         this.id = id;
     }
 
-    async addToDatabase(){
-        try {
-            await clientPromise;
-        } catch(error){
-            throw error;
-        }
-
-        const todo = new Todo({
+    getTodoObject(): TodoSchemaInterface{
+        return {
             name: this.name,
             status: this.status,
-            date: this.date
-        });
-        try {
-            await todo.save();
-        } catch (error){
-            throw error;
+            date: this.date,
         }
-        
-        this.id = todo._id;
-        return this.id;
     }
 
     async changeStatus(status: TodoStatus){

@@ -1,14 +1,18 @@
 import { signIn } from "next-auth/react";
+import React, { ButtonHTMLAttributes } from "react";
 
 function JoinPage(){
-    
+    const joinGoogleHandler = (e: React.MouseEvent<ButtonHTMLAttributes>) => {
+        signIn("google");
+    }
+
     return (<div>
         <div>
             <h1>Welcome to TodoApp</h1>
             <h5>You need to register in order to join us</h5>
         </div>
         <div>
-            <button onClick={() => signIn("google")}>Join us using Google</button>
+            <button onClick={joinGoogleHandler}>Join us using Google</button>
         </div>
     </div>)
 }
