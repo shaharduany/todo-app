@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AccountPage from "../components/AccountPage";
+import AddTodo from "../components/AddTodo";
 
 interface HomeProps {
 	session: string,
@@ -20,7 +21,7 @@ const Home: NextPage = (props: HomeProps) => {
 	
 	return (<div>
 		<AccountPage />
-
+		<AddTodo />
 	</div>)
 };
 

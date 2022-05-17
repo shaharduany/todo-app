@@ -1,7 +1,6 @@
-import { useSession } from "next-auth/react"
-import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-export default function AccountPage(props: {}){
+export default function AccountPage(){
     const { data: session, status } = useSession();
     
     if(!session){
@@ -10,7 +9,7 @@ export default function AccountPage(props: {}){
         </div>);
     }
 
-    const user = session.user;
+    const user = session.user ;
 
     return (<div>
         <h1>{user.name}</h1>    
