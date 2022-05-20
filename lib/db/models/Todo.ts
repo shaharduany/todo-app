@@ -27,4 +27,4 @@ let todoSchema = new Schema<TodoSchemaInterface>({
     }
 });
 
-export default mongoose.models?.Todo || mongoose.model("Todo", todoSchema);
+export default mongoose.models.Todo || mongoose.model("Todo", todoSchema);

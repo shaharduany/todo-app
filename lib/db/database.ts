@@ -3,11 +3,6 @@ import DB_URI from "./db-uri";
 
 const uri = DB_URI;
 
-const options = {
-	useUnifiedTopology: true,
-	useNewUrlParser: true,
-};
-
 let client;
 let clientPromise: Promise<MongoClient>;
 
