@@ -11,41 +11,43 @@ export enum TodoStatus {
 }
 
 export default class TodoItem {
-    name:string;
-    date: TodoDate;
-    status: TodoStatus;
-    id: TodoId;
+	name: string;
+	date: TodoDate;
+	status: TodoStatus;
+	id: TodoId;
 
-    constructor(name: string,
-         status: TodoStatus = TodoStatus.Pending,          
-        date: TodoDate = Date.now()
-        id: TodoId = "empty"){
-        this.name = name;
-        this.date = date;
-        this.status = status;
-        this.id = id;
-    }
+	constructor(
+		name: string,
+		date: TodoDate = Date.now(),
+		status: TodoStatus = TodoStatus.Pending,
+		id: TodoId = "empty"
+	) {
+		this.name = name;
+		this.date = date;
+		this.status = status;
+		this.id = id;
+	}
 
-    getTodoObject(): TodoSchemaInterface{
-        return {
-            name: this.name,
-            status: this.status,
-            date: this.date,
-        }
-    }
+	getTodoObject(): TodoSchemaInterface {
+		return {
+			name: this.name,
+			status: this.status,
+			date: this.date,
+		};
+	}
 
-    async changeStatus(status: TodoStatus){
-        if(this.status === status){
-            return true;
-        }
+	async changeStatus(status: TodoStatus) {
+		if (this.status === status) {
+			return true;
+		}
 
-        this.status = status;
-        try {
-            await Todo.findOneAndUpdate({ name: this.name }, { status: this.status });
-            return true;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
+		this.status = status;
+		try {
+			await Todo.findOneAndUpdate({ name: this.name }, { status: this.status });
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	}
 }
