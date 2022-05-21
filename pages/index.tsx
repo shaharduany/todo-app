@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import AccountPage from "../components/AccountPage";
 import AddTodo from "../components/AddTodo";
+import TodoList from "../components/TodoList";
 import { getTodosFromEmail } from "../helpers/db-helpers";
 import TodoItem from "../lib/todos/todo-item";
 
@@ -23,22 +24,23 @@ const Home = (props: HomeProps): JSX.Element => {
 			router.push("/join-us");
 		}
 	}, [session]);
-	console.log(todos);
 
 	return (<div>
 		<AccountPage />
 		<AddTodo />
+		<TodoList todos={todos} />
 	</div>)
 };
 
 export async function getServerSideProps(context: NextPageContext) {
-
 	const session = await getSession(context);
 	let todos: TodoItem[] = [];
 	let history: TodoItem[] = [];
 	
 	if(session){
-		todos = await getTodosFromEmail(session.user.email);
+		let email = session.user.email;
+		todos = await getTodosFromEmail(email);
+		history = await getTodosFromEmail(email, true);
 	}
 
 	return {

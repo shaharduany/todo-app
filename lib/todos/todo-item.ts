@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Todo, { TodoSchemaInterface } from "../db/models/Todo";
 
 export type TodoDate = Date | number;
 type TodoId = string | mongoose.Types.ObjectId;
@@ -28,26 +27,11 @@ export default class TodoItem {
 		this.id = id;
 	}
 
-	getTodoObject(): TodoSchemaInterface {
+	getTodoObject() {
 		return {
 			name: this.name,
 			status: this.status,
 			date: this.date,
 		};
-	}
-
-	async changeStatus(status: TodoStatus) {
-		if (this.status === status) {
-			return true;
-		}
-
-		this.status = status;
-		try {
-			await Todo.findOneAndUpdate({ name: this.name }, { status: this.status });
-			return true;
-		} catch (error) {
-			console.log(error);
-			return false;
-		}
 	}
 }

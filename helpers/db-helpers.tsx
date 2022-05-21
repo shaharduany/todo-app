@@ -2,13 +2,20 @@ import { Types } from "mongoose";
 import clientPromise from "../lib/db/database";
 import TodoItem from "../lib/todos/todo-item";
 
-export async function getTodosFromEmail(email: string): TodoItem[] {
+export async function getTodosFromEmail(
+	email: string,
+	history: boolean = false
+): TodoItem[] {
 	let todoList: TodoItem[] = [];
 	let todoIds: Types.ObjectId[] = [];
 
 	try {
 		let user = await getUserByEmail(email);
-		todoIds = user.todos;
+		if (history) {
+			todoIds = user.history;
+		} else {
+			todoIds = user.todos;
+		}
 	} catch (error) {
 		console.log(error);
 		return todoList;
