@@ -1,7 +1,7 @@
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AccountPage from "../components/AccountPage";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
@@ -17,7 +17,6 @@ type HomeProps = {
 const Home = (props: HomeProps): JSX.Element => {
 	let session = JSON.parse(props.session);
 	let todos = JSON.parse(props.todos);
-
 	let router = useRouter();
 	useEffect(() => {
 		if(!session){

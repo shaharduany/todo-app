@@ -5,11 +5,12 @@ type TodosListType = TodoItem[];
 
 export interface TodolistProps {
 	todos: TodosListType;
+	history: boolean;
 }
 
 export default function TodoList(props: TodolistProps) {
 	let todos = props.todos;
-
+	
 	return (
 		<div>
 			{todos &&

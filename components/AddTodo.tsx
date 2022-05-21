@@ -1,9 +1,11 @@
+import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 
 function AddTodo() {
 	const todoInputRef = useRef<HTMLInputElement>();
 	const [dueDate, setDueDate] = useState(new Date());
+    const router = useRouter();
 
 	const [message, setMsg] = useState("");
 
@@ -30,7 +32,8 @@ function AddTodo() {
 		let json = await req.json();
 
 		setMsg(json.message);
-	};
+        router.reload();
+    };
 
 	return (
 		<div>
