@@ -1,14 +1,16 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TodoComp, { TodoProps } from "./TodoComp";
 
 export default function TodoRemove(props: TodoProps) {
 	let name = props.name;
 	let date = props.date;
-	let status = props.status;
-	let id = props.id;
-    const router = useRouter();
 
+    console.log(date);
+
+	let status = props.status;
+	const router = useRouter();
+    
 	const removeHandler = async () => {
 		let req = await fetch("/api/todos/archive-todo", {
 			method: "POST",
@@ -26,6 +28,7 @@ export default function TodoRemove(props: TodoProps) {
 			</div>
 			<div>
 				<TodoComp name={name} status={status} date={date} />
+                
 			</div>
 		</div>
 	);
