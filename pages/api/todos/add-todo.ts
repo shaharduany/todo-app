@@ -7,10 +7,15 @@ async function handler(req: any, res: NextApiResponse) {
 	let db = (await clientPromise).db();
 	const METHOD = req.method;
 	const todoName = req.body.todoName.trim();
-	const date = req.body.date;
+	const date = req.body.dueDate;
 	const session = await getSession({ req });
 
-	if (!validinputs(METHOD, todoName, session)) {
+	if (
+		METHOD !== "POST" ||
+		typeof todoName !== "string" ||
+		todoName === "" ||
+		!session
+	) {
 		res.status(401).json({
 			message: "Unauthorized request",
 		});
@@ -32,9 +37,10 @@ async function handler(req: any, res: NextApiResponse) {
 		return;
 	}
 	res.status(200).json({ message: "went well " });
+	return;
 }
 
-function validinputs(METHOD, todoName, session) {
+function validinputs(METHOD: string, todoName: string, session: any) {
 	if (
 		METHOD !== "POST" ||
 		typeof todoName !== "string" ||

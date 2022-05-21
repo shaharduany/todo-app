@@ -1,41 +1,46 @@
 import { Types } from "mongoose";
 import clientPromise from "../lib/db/database";
-import Todo, { TodoSchemaInterface } from "../lib/db/models/Todo";
-import User, { UserInterface } from "../lib/db/models/User";
 import TodoItem from "../lib/todos/todo-item";
 
-type TodoType = string[] | ErrorOptions[] | Types.ObjectId[] | TodoItem[];
+export async function getTodosFromEmail(email: string): TodoItem[] {
+	let todoList: TodoItem[] = [];
+	let todoIds: Types.ObjectId[] = [];
 
-async function convertTodoIdsToObject(todos: TodoType): TodoItem[]{
-    let validTodos:TodoItem[] = [];
-    let todoItem: TodoItem;
+	try {
+		let user = await getUserByEmail(email);
+		todoIds = user.todos;
+	} catch (error) {
+		console.log(error);
+		return todoList;
+	}
 
-    for(let todo of todos){
-        let todoObj = await Todo.findById(todo);
-        
-        todoItem = new TodoItem(todoObj.name, todoObj.status, todoObj.date, todoObj._id);
-        validTodos.push(todoItem);
-    }
+	try {
+		todoList = await convertTodoIds(todoIds);
+	} catch (error) {
+		console.log(error);
+	}
 
-    return validTodos;
+	return todoList;
 }
 
-export async function getTodosByEmail(email: string): TodoType{
-    clientPromise;
-    let todos: TodoType;
+async function getUserByEmail(email: string) {
+	let db = (await clientPromise).db();
 
-    try{
-        let user = await User.findOne({ email });
-        todos = user.todos;
-    } catch (error: ErrorOptions{
-        return [error]
-    }
+	let user = await db.collection("users").findOne({ email });
+	return user;
+}
 
-    try {
-        todos = await convertTodoIdsToObject(todos);
-    } catch (error: Error){
-        return [error];
-    }
+async function convertTodoIds(TodoIds: Types.ObjectId[]) {
+	let db = (await clientPromise).db();
+	let todoList: TodoItem[] = [];
 
-    return todos;
+	for (let todoId of TodoIds) {
+		let obj = await db.collection("todos").findOne({ _id: todoId });
+		if (obj instanceof Object) {
+			let todoItem = new TodoItem(obj.name, obj.date, obj.status, todoId);
+			todoList.push(todoItem);
+		}
+	}
+
+	return todoList;
 }

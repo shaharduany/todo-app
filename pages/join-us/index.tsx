@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import JoinPage from "../../components/JoinComp";
 
-const Join: NextPage = () => {
+const Join = (): JSX.Element => {
 	let { data: session, status } = useSession();
 	let router = useRouter();
 
