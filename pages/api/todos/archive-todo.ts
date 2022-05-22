@@ -8,7 +8,8 @@ export default async function handler(req: Request, res: Response) {
 	let { todoName } = req.body;
 	if (
 		!todoName ||
-		(typeof todoName === "string" && todoName.trim() === "") ||
+		typeof todoName !== "string" ||
+		todoName.trim() === "" ||
 		METHOD !== "POST" ||
 		!session
 	) {

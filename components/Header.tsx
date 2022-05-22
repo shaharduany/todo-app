@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { signOut } from "next-auth/react";
+import styles from './styles/Header.module.scss';
 
 export default function Header() {
 	const { data: session, status } = useSession();
@@ -14,7 +15,7 @@ export default function Header() {
 	};
 
 	return (
-		<div>
+		<div className={styles.headerDiv}>
 			<nav>
 				<ul>
 					<li>

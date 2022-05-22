@@ -1,0 +1,14 @@
+.container {
+  display: grid;
+  
+  .accountDiv{
+    text-align: center;
+  }
+  .todosDiv{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin: 20px;
+  }
+
+  background-image: none;
+}

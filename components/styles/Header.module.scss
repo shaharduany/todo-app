@@ -1,0 +1,31 @@
+
+
+@mixin onItem($value) {
+    border-radius: 20px;
+	padding: 10px;
+	background-color: $value;
+}
+.headerDiv {
+	ul {
+		list-style: none;
+		display: inline-flex;
+		align-items: center;
+
+		li {
+			margin: 20px;
+            &:hover{
+                @include onItem(green);
+            }
+		}
+		button {
+			padding: 5px;
+			border-radius: 20px;
+			border: 2px solid black;
+			color: gray;
+            &:hover{
+                @include onItem(#fff);
+            }
+		}
+	}
+}
+

@@ -7,6 +7,7 @@ import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 import { getTodosFromEmail } from "../helpers/db-helpers";
 import TodoItem from "../lib/todos/todo-item";
+import styles from "../styles/Home.module.scss";
 
 type HomeProps = {
 	session: string;
@@ -27,16 +28,20 @@ const Home = (props: HomeProps): JSX.Element => {
 	}, [session]);
 
 	return (
-		<div>
-			<AccountPage />
-			<div>
-				<h1>TODO</h1>
-				<AddTodo />
-				<TodoList todos={todos} history={false} />
+		<div className={styles.container}>
+			<div className={styles.accountDiv}>
+				<AccountPage />
 			</div>
-			<div>
-				<h1>ARCHIVE</h1>
-				<TodoList todos={history} history={true} />
+			<div className={styles.todosDiv}>
+				<div>
+					<h1>TODO</h1>
+					<AddTodo />
+					<TodoList todos={todos} history={false} />
+				</div>
+				<div>
+					<h1>ARCHIVE</h1>
+					<TodoList todos={history} history={true} />
+				</div>
 			</div>
 		</div>
 	);
