@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
+import styles from './styles/AddTodo.module.scss';
 
 function AddTodo() {
 	const todoInputRef = useRef<HTMLInputElement>();
@@ -36,14 +37,15 @@ function AddTodo() {
     };
 
 	return (
-		<div>
+		<div className={styles.container}>
 			<div>{message && <h5>{message}</h5>}</div>
 			<form onSubmit={todoSubmit}>
-				<div>
+				<div className={styles.todoName}>
 					<label htmlFor="todo">Todo</label>
 					<input id="todo" type="text" ref={todoInputRef} />
 				</div>
-				<div>
+				<div className={styles.datePicker}>
+                    <label>DATE</label>
 					<DatePicker
 						selected={dueDate}
 						onChange={(date: Date) => setDueDate(date)}

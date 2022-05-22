@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+
+    button{
+        margin-right: 10px;
+        padding: 5px;
+        &:hover {
+            background-color: red;
+        }
+    }
+}
